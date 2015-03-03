@@ -1,52 +1,50 @@
 /* Program to demonstrate straight / simple insertion sort  */
 
 #include <stdio.h>
-#include <conio.h>
 
-void insert(int x[],int n);
-void show(int x[],int n);
+void insert(int x[], int n);
+void show(int x[], int n);
 
-void main()
+int main()
 {
- int i,n,x[20];
+    int i, n, x[20];
 
- clrscr();
 
- printf("Enter the number of elements: ");
- scanf("%d",&n);
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
 
- printf("Enter the elements:\n");
- for(i=0;i<n;i++)
-    scanf("%d",&x[i]);
+    printf("Enter the elements:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &x[i]);
 
- insert(x,n);
+    insert(x, n);
 
- printf("Sorted array is as shown:\n");
- for(i=0;i<n;i++)
-    printf("%d ",x[i]);
+    printf("Sorted array is as shown:\n");
+    for(i = 0; i < n; i++)
+        printf("%d ", x[i]);
 
- getch();
+    return 0;
 }
 
-void insert(int x[],int n)
+void insert(int x[], int n)
 {
- int i,j,y;
- for(i=1;i<n;i++)
- {
-   y=x[i];
-   for(j=i-1;j>=0&&y<x[j];j--)  
-       x[j+1]=x[j];
-   x[j+1]=y;
-   show(x,n);
- }
+    int i, j, y;
+    for(i = 1; i < n; i++)
+    {
+        y = x[i];
+        for(j = i - 1; j >= 0 && y < x[j]; j--)
+            x[j + 1] = x[j];
+        x[j + 1] = y;
+        show(x, n);
+    }
 }
 
-void show(int x[],int n)
+void show(int x[], int n)
 {
-  int i;
-  for(i=0;i<n;i++)
-    printf("%d ",x[i]);
-  printf("\n\n");
+    int i;
+    for(i = 0; i < n; i++)
+        printf("%d ", x[i]);
+    printf("\n\n");
 }
 
 

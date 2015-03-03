@@ -4,109 +4,110 @@ wacp to construct an expression tree using a prefix expression. Then use the exp
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 #include <string.h>
+
+#ifndef NULL
 #define NULL 0
+#endif
 #define STACKSIZE 50
 
 
 struct node
 {
-  char data;            
-  struct node *left;
-  struct node *right;
+    char data;
+    struct node *left;
+    struct node *right;
 };
 
 struct stack
 {
-  int top;
-  struct node* items[STACKSIZE];
+    int top;
+    struct node* items[STACKSIZE];
 };
 
-void createtree(char e[],struct node **proot);
+void createtree(char e[], struct node **proot);
 int isoperand(char c);
 struct node* pop(struct stack *ps);
-void push(struct stack *ps,struct node* x); 
+void push(struct stack *ps, struct node* x);
 void postorder(struct node *root);
 void inorder(struct node *root);
 
-void main()
+int main()
 {
-  struct node *root=NULL;
-  char e[50];
-  clrscr();
+    struct node *root = NULL;
+    char e[50];
 
-  printf("Enter the expression in prefix form:\n");
-  gets(e);
-  createtree(e,&root);
+    printf("Enter the expression in prefix form:\n");
+    gets(e);
+    createtree(e, &root);
 
-  printf("Expression in postfix form is: ");
-  postorder(root);
-  printf("\n");
+    printf("Expression in postfix form is: ");
+    postorder(root);
+    printf("\n");
 
-  printf("Expression in infix form is: ");
-  inorder(root);
-  printf("\n");
-  getch();
+    printf("Expression in infix form is: ");
+    inorder(root);
+    printf("\n");
+    return 0;
 }
 
-void createtree(char e[],struct node **proot)
+void createtree(char e[], struct node **proot)
 {
-  int i,n;  
-  struct node *pnode,*op1,*op2;
+    int i, n;
+    struct node *pnode, *op1, *op2;
 
-  struct stack s;
-  s.top=-1;
+    struct stack s;
+    s.top = -1;
 
-  n=strlen(e);
+    n = strlen(e);
 
-  for(i=n-1;i>=0;i--)
-    if(isoperand(e[i]))
-    {
-      pnode=(struct node*)malloc(sizeof(struct node));
-      pnode->data=e[i];
-      pnode->left=pnode->right=NULL;
-      push(&s,pnode);
-    }
-    else
-    {
-      op1=pop(&s);
-      op2=pop(&s);
-      pnode=(struct node*)malloc(sizeof(struct node));
-      pnode->data=e[i];
-      pnode->left=op1;
-      pnode->right=op2;
-      push(&s,pnode);
-    }
-  *proot=pop(&s);
+    for(i = n - 1; i >= 0; i--)
+        if(isoperand(e[i]))
+        {
+            pnode = (struct node*)malloc(sizeof(struct node));
+            pnode->data = e[i];
+            pnode->left = pnode->right = NULL;
+            push(&s, pnode);
+        }
+        else
+        {
+            op1 = pop(&s);
+            op2 = pop(&s);
+            pnode = (struct node*)malloc(sizeof(struct node));
+            pnode->data = e[i];
+            pnode->left = op1;
+            pnode->right = op2;
+            push(&s, pnode);
+        }
+    *proot = pop(&s);
 }
 
 void postorder(struct node *root)
 {
-  if(root!=NULL)
-  {
-    postorder(root->left);
-    postorder(root->right);
-    printf("%c",root->data);
-  }
+    if(root != NULL)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%c", root->data);
+    }
 }
 
 void inorder(struct node *root)
 {
-  if(root!=NULL)
-  {
-    inorder(root->left);
-    printf("%c",root->data);
-    inorder(root->right);
-  }
+    if(root != NULL)
+    {
+        inorder(root->left);
+        printf("%c", root->data);
+        inorder(root->right);
+    }
 }
 
 int isoperand(char c)
 {
-  if( c>='0'&&c<='9' || c>='A'&&c<='Z' || c>='a'&&c<='z' )
-    return 1;
-  else
-    return 0;
+    if( c >= '0' && c <= '9' || c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z' )
+        return 1;
+    else
+        return 0;
 }
 
 struct node* pop(struct stack *ps)
@@ -114,9 +115,9 @@ struct node* pop(struct stack *ps)
     return(ps->items[ps->top--]);
 }
 
-void push(struct stack *ps,struct node* x)
+void push(struct stack *ps, struct node* x)
 {
-    ps->items[++(ps->top)]=x;
+    ps->items[++(ps->top)] = x;
 }
 
 
